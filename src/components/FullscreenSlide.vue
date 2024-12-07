@@ -5,9 +5,34 @@ import { useScreensStore } from '@/stores/screens'
 const store = useScreensStore()
 const timer = ref<number | null>(null)
 
+// 处理全屏
+const requestFullscreen = () => {
+  const elem = document.documentElement
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen()
+  } else if ((elem as any).webkitRequestFullscreen) {
+    ; (elem as any).webkitRequestFullscreen()
+  } else if ((elem as any).mozRequestFullScreen) {
+    ; (elem as any).mozRequestFullScreen()
+  } else if ((elem as any).msRequestFullscreen) {
+    ; (elem as any).msRequestFullscreen()
+  }
+}
+
 onMounted(() => {
   store.initializeMockData()
   startSlideshow()
+
+  // 监听触摸事件，双击进入全屏
+  let lastTap = 0
+  document.addEventListener('touchend', (e) => {
+    const currentTime = new Date().getTime()
+    const tapLength = currentTime - lastTap
+    if (tapLength < 500 && tapLength > 0) {
+      requestFullscreen()
+    }
+    lastTap = currentTime
+  })
 })
 
 onUnmounted(() => {
@@ -34,6 +59,8 @@ const handleDoubleClick = () => {
   }
   store.nextScreen()
   startSlideshow()
+  // 双击同时也进入全屏
+  requestFullscreen()
 }
 </script>
 
@@ -102,5 +129,22 @@ body {
 #app {
   position: absolute;
   inset: 0;
+}
+
+/* 全屏模式下的样式 */
+:fullscreen {
+  background: inherit;
+}
+
+:-webkit-full-screen {
+  background: inherit;
+}
+
+:-moz-full-screen {
+  background: inherit;
+}
+
+:-ms-fullscreen {
+  background: inherit;
 }
 </style>
