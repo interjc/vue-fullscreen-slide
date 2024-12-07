@@ -1,10 +1,49 @@
 @import './base.css';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  /* Prevent iOS Safari elastic scrolling */
+  position: fixed;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Remove default max-width and padding for fullscreen app */
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+  /* Ensure proper rendering on iOS */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* iPad landscape specific styles */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  body {
+    /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  #app {
+    /* Ensure full height on iPad */
+    height: 100%;
+    width: 100%;
+  }
 }
 
 a,
