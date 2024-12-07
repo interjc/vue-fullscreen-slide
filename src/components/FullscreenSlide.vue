@@ -67,7 +67,7 @@ const handleDoubleClick = () => {
 
           <!-- QR Codes Section -->
           <div class="w-full h-[300px] flex justify-center items-center">
-            <div class="w-full flex justify-between px-16">
+            <div class="w-full flex justify-center gap-4 px-16">
               <img src="/qr-ins.png" class="w-48 h-48" alt="QR Code 1" />
               <img src="/qr-x.png" class="w-48 h-48" alt="QR Code 2" />
             </div>
